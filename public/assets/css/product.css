@@ -1,0 +1,36 @@
+.card-category {
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.card-category-text {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.card {
+    transition: 0.5s;
+}
+
+.card:hover {
+    transition: 0.5s;
+    transform: translateY(-5px) scale(1.005) translateZ(0);
+}
+
+.color-blue {
+    color: rgb(110, 185, 247) !important;
+}
+
+.card-title {
+    color: black !important;
+}
+
+@media (max-width: 991.98px) {
+    /* .card {
+        width: 100% !important;
+    } */
+}

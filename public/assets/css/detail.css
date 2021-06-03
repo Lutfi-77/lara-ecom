@@ -1,0 +1,19 @@
+.thumbnail-slider {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    margin-top: 5px;
+}
+
+.thumb {
+    width: 50px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.thumb:hover {
+    border: 1px solid black;
+}
+
+.text-right {
+    text-align: right;
+}

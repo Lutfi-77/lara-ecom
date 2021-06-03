@@ -95,6 +95,11 @@ class SellerController extends Controller
         return view('seller.addProduct');
     }
 
+    public function storeProduct(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function storeImg(Request $request)
     {
         // $gambars = $request->file('images')->store(

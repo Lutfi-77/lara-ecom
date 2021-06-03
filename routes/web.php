@@ -20,6 +20,7 @@ Route::post('/seller/register', 'SellerController@sendRegister')->name('seller.s
 Route::middleware('auth')->group(function(){
     Route::get('/seller', 'SellerController@dashboard')->name('seller.dashboard');
     Route::get('/seller/addproduct', 'SellerController@addProduct')->name('seller.addProduct');
+    Route::post('/seller/addproduct', 'SellerController@storeProduct')->name('seller.storeProduct');
     Route::post('/seller/uploadimg', 'SellerController@storeImg')->name('seller.storeImg');
     Route::get('/seller/logout', 'SellerController@logout')->name('seller.logout');
 });

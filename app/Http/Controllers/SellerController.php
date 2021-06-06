@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\VerifyEmail;
 
 use App\Models\User;
 use App\Models\Product;
@@ -97,15 +98,32 @@ class SellerController extends Controller
 
     public function storeProduct(Request $request)
     {
-        dd($request->all());
+        $product = new Product;
+
+        $product->product_name = $request->productName;
+        $product->product_desc = $request->productDesc;
+        $product->stock = $request->productStock;
+        $product->price = $request->productPrice;
+        $product->category_id = $request->productCategory;
+        $product->user_id = $request->user()->id;
+
+        $product->save();
+        return response()->json(['product_id'=>$product->id]);
     }
 
     public function storeImg(Request $request)
     {
-        // $gambars = $request->file('images')->store(
-        //     'prodImg/'.$request->user()->id
-        // );
-        return response()->json(['success'=>"OK"]);
+        $gambars = $request->file('images')->store(
+            'public/product/img/'.$request->user()->id
+        );
+        $imgUrl = explode('/', $gambars);
+        $imgUrl = end($imgUrl);
+        $userId = $request->user()->id;
+        $img = new Image;
+        $img->product_id = $request->productId;
+        $img->url = "product/img/$userId/$imgUrl";
+        $img->save();
+        return response()->json(['id'=>$request->productId, 'all' => $request->all()]);
     }
 
     public function logout()

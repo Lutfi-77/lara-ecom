@@ -1,6 +1,6 @@
 @extends('seller/master/masterSeller')
 
-@section('title', 'Dashboard')
+@section('title', 'Add Product')
 
 @section('css')
 <link rel="stylesheet" href="{{asset('assets/seller/css/custom/style.css')}}">
@@ -33,19 +33,19 @@
                 <div class="col-lg-6 col-sm-6 col-md-6">
                     <div class="form-group">
                         <label>Stock Product</label>
-                        <input type="number" min="0" value="2" class="form-control mb-2" name="productStock">
+                        <input type="number" min="0" class="form-control mb-2" name="productStock">
                     </div>
 
                     <div class="form-group">
                         <label>Harga Product</label>
-                        <input type="number" min="0" value="1" class="form-control" name="productPrice">
+                        <input type="number" min="0" class="form-control" name="productPrice">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Deskripsi Product</label>
                     <textarea class="form-control" style="height: 150px;" aria-label="With textarea"
-                        name="productDesc">da</textarea>
+                        name="productDesc"></textarea>
                 </div>
                 @if($errors->any())
                 {{dd($errors)}}
@@ -107,6 +107,7 @@
                         },
                         error: function (error) {
                             console.log(error);
+                            console.log('pastikan semua terisi ya');
                         }
                     })
                 })
@@ -119,13 +120,13 @@
 
                 this.on("success", function (file, response) {
                     //reset the form
-                    $('#demoform')[0].reset();
+                    $('#uploadData')[0].reset();
                     //reset dropzone
-                    $('.dropzone-previews').empty();
+                    $('.dz-preview').empty();
                 })
 
                 this.on("error", function (file, response) {
-                    console.log(response);
+                    console.log("pastikan semua terisi");
                 })
             }
         })

@@ -26,7 +26,9 @@
                     <div class="form-group">
                         <label>Category Product</label>
                         <select class="form-select" id="inputGroupSelect01" name="productCategory">
-                            <option value="1">One</option>
+                            @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -123,6 +125,7 @@
                     $('#uploadData')[0].reset();
                     //reset dropzone
                     $('.dz-preview').empty();
+                    window.location = '{{route("seller.products")}}'
                 })
 
                 this.on("error", function (file, response) {

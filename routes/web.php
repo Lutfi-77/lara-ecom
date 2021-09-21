@@ -11,21 +11,40 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 // SELLER AUTH ROUTE
-Route::get('/seller/login', 'SellerController@login')->name('seller.login');
-Route::post('/seller/login', 'SellerController@authenticate')->name('seller.auth');
-Route::get('/seller/register', 'SellerController@register')->name('seller.register');
-Route::post('/seller/register', 'SellerController@sendRegister')->name('seller.sendRegister');
+Route::get('/seller/login', 'seller\AuthSellerController@login')->name('seller.login');
+Route::post('/seller/login', 'seller\AuthSellerController@authenticate')->name('seller.auth');
+Route::get('/seller/register', 'seller\AuthSellerController@register')->name('seller.register');
+Route::post('/seller/register', 'seller\AuthSellerController@sendRegister')->name('seller.sendRegister');
 
 Route::middleware('auth')->group(function(){
-    Route::get('/seller', 'SellerController@dashboard')->name('seller.dashboard');
-    Route::get('/seller/addproduct', 'SellerController@addProduct')->name('seller.addProduct');
-    Route::post('/seller/addproduct', 'SellerController@storeProduct')->name('seller.storeProduct');
-    Route::post('/seller/uploadimg', 'SellerController@storeImg')->name('seller.storeImg');
-    Route::get('/seller/logout', 'SellerController@logout')->name('seller.logout');
+    Route::get('/seller', 'seller\SellerController@dashboard')->name('seller.dashboard');
+    Route::get('/seller/logout', 'seller\AuthSellerController@logout')->name('seller.logout');
+
+    // PRODUCT SELLER CONTROLLER
+    Route::get('seller/products', 'seller\ProductSellerController@index')->name('seller.products');
+
+    // ADD PRODUCT
+    Route::get('/seller/addproduct', 'seller\ProductSellerController@addProduct')->name('seller.addProduct');
+    Route::post('/seller/addproduct', 'seller\ProductSellerController@storeProduct')->name('seller.storeProduct');
+    Route::post('/seller/uploadimg', 'seller\ProductSellerController@storeImg')->name('seller.storeImg');
+    // DELETE PRODUCT PASSING ID PRODUCT
+    Route::get('/seller/delete/{id}', 'seller\ProductSellerController@deleteProduct')->name('seller.deleteProduct');
+    // DETAIL PRODUCT PASSING ID PRODUCT
+    Route::get('/seller/product/detail/{id}', 'seller\ProductSellerController@detailProduct')->name('seller.detailProduct');
+    // ADD NEW IMAGE FOR PRODUCT PASSING ID PRODUCT
+    Route::get('/seller/product/addimage/{id}', 'seller\ProductSellerController@addImageProduct')->name('seller.addImageProduct');
+
+    // CATEGORY SELLER CONTROLLER
+    Route::get('seller/category', 'seller\CategorySellerController@index')->name('seller.categories');
+    Route::get('seller/addcategory', 'seller\CategorySellerController@addCategory')->name('seller.addCategory');
+    
+    Route::post('seller/addcategory', 'seller\CategorySellerController@store')->name('seller.storeCategory');
+    Route::get('seller/delete/category/{id}', 'seller\CategorySellerController@delete')->name('seller.categoryDelete');
 });
 
-Route::get('/verifyseller/code/{code}', 'SellerController@verifcode')->name('seller.verifikasi');
+Route::get('/verifyseller/code/{code}', 'seller\AuthSellerController@verifcode')->name('seller.verifikasi');
 
 // USER AUTH ROUTE
 Route::get('/login', 'UserController@login')->name('user.login');

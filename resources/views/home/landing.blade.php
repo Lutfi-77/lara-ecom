@@ -29,110 +29,43 @@
         <h3 class="text-center p-4">Best Product</h3>
 
         <div class="row">
+            @foreach ($products as $product)
             <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-2">
-                <div class="card">
-                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png"
-                        class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">Vans Sk8-Hi MTE Shoes</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Style: VA33TXRJ5</h6>
-                        <p class="card-text">
-                            The Vans All-Weather MTE Collection features footwear and apparel designed to withstand the
-                            elements whilst still looking cool. </p>
-                        <div class="options d-flex flex-fill">
-                            <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
-                                <option selected>Color</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-
-                            <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
-                                <option selected>size</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="buy d-flex justify-content-between align-items-center">
-                            <div class="price text-success">
-                                <h5 class="mt-4">$125</h5>
+                <a href="{{route('detail', $product->id)}}" class="unlink">
+                    <div class="card">
+                        <img src="{{$product->image->isEmpty() ? asset('assets/img/noimage.png') : url('storage/'.$product->image[0]->url)}}" class="card-img" style="max-height: 300px; object-fit: contain">
+                        <div class="card-body">
+                            <h4 class="card-title">{{$product->product_name}}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">Category: {{$product->category->category_name}}</h6>
+                            <p class="card-text">
+                                The Vans All-Weather MTE Collection features footwear and apparel designed to withstand the
+                                elements whilst still looking cool. </p>
+                            <div class="options d-flex flex-fill">
+                                <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
+                                    <option selected>Color</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+    
+                                <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
+                                    <option selected>size</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
                             </div>
-                            <a href="#" class="btn btn-danger mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                            <div class="buy d-flex justify-content-between align-items-center">
+                                <div class="price text-success">
+                                    <h5 class="mt-4">$125</h5>
+                                </div>
+                                <a href="#" class="btn btn-danger mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
-
-            <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-2">
-                <div class="card">
-                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png"
-                        class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">Vans Sk8-Hi MTE Shoes</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Style: VA33TXRJ5</h6>
-                        <p class="card-text">
-                            The Vans All-Weather MTE Collection features footwear and apparel designed to withstand the
-                            elements whilst still looking cool. </p>
-                        <div class="options d-flex flex-fill">
-                            <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
-                                <option selected>Color</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-
-                            <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
-                                <option selected>size</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="buy d-flex justify-content-between align-items-center">
-                            <div class="price text-success">
-                                <h5 class="mt-4">$125</h5>
-                            </div>
-                            <a href="#" class="btn btn-danger mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-8 col-md-6 col-lg-4 mb-2">
-                <div class="card">
-                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png"
-                        class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">Vans Sk8-Hi MTE Shoes</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Style: VA33TXRJ5</h6>
-                        <p class="card-text">
-                            The Vans All-Weather MTE Collection features footwear and apparel designed to withstand the
-                            elements whilst still looking cool. </p>
-                        <div class="options d-flex flex-fill">
-                            <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
-                                <option selected>Color</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-
-                            <select class="form-select form-select-md mb-3" aria-label=".form-select-md example">
-                                <option selected>size</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="buy d-flex justify-content-between align-items-center">
-                            <div class="price text-success">
-                                <h5 class="mt-4">$125</h5>
-                            </div>
-                            <a href="#" class="btn btn-danger mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
     </div>

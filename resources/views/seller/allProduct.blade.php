@@ -13,8 +13,7 @@
                 {{-- {{dd($products->image)}} --}}
                 <div class="col-lg-3">
                     <div class="card shadow">
-                        <img src="{{url('storage/'.$products->image[0]->url)}}"
-                            class="card-img-top" alt="productImage">
+                        <img src="{{$products->image->isEmpty() ? asset('assets/img/noimage.png') : url('storage/'.$products->image[0]->url)}}" alt="" class="card-img-top" alt="productImage">
                         <div class="card-body">
                             <div class="card-title" style="font-size: 15px; font-weight: bold;">{{$products->product_name}}</div>
                             <p class="card-text text-justify">

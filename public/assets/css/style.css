@@ -42,6 +42,14 @@ body {
     text-decoration: none;
 } */
 
+a.unlink {
+    color: inherit;
+    text-decoration: none;
+}
+a.unlink:hover {
+    color: inherit;
+}
+
 .container__custom {
     width: 100%;
     padding-right: 6.8rem;

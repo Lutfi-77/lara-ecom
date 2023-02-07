@@ -33,8 +33,8 @@
         </div>
     </nav>
 
-    <div class="container h-100">
-        <h3 class="otp">{{$otp}}</h3>
+    <div class="container">
+        <h3 class="otp">{{$otp->otp}}</h3>
     </div>
 
 </body>

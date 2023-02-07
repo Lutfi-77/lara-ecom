@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\SendOtp;
+use Validator;
 use App\Models\Customer;
+use App\Models\Otp;
+use App\Mail\SendOtp;
 
 class UserController extends Controller
 {
@@ -34,12 +36,23 @@ class UserController extends Controller
         return view('user.register');
     }
 
-    public function generateOTP()
+    public function generateOTP($customer_id)
     {
-        // Generate OTP
+        // Generate OTP and save to database
         $otp = rand(100000,999999);
+        $validator =  Validator::make(['otp' => $otp], [
+            'otp' => 'unique:otp'
+        ]);
 
-        return $otp;
+        while( $validator->fails() ){
+            $otp = rand(100000,999999);
+        }
+
+        $saveOtp = new Otp;
+        $saveOtp->otp = $otp;
+        $saveOtp->customer_id = $customer_id;
+        $saveOtp->save();
+        return $saveOtp;
     }
 
     public function storeRegister(Request $request)
@@ -61,9 +74,9 @@ class UserController extends Controller
         $customer->phone = $request->phone;
         $customer->save();
 
-        $request->session()->put('otp', $this->generateOTP());
+        $otp = $this->generateOTP($customer->id);
 
-        mail::to($request->email)->send(new SendOtp($request->session()->get('otp')));
+        mail::to($request->email)->send(new SendOtp($otp));
         
         return redirect()->route('user.inputOTP', ['id' => $customer->id]);
 
@@ -78,13 +91,17 @@ class UserController extends Controller
     public function verifOtp(Request $request, $id)
     {
         $customer = Customer::where('id', $id)->first();
-        if($request->otp == $request->session()->get('otp')){
-            $customer->is_verified = 1;
-            $customer->verif_code = $request->otp;
-            $customer->email_verified_at = strtotime("now");
-            $request->session()->forget('otp');
-            $customer->save();
-            return redirect()->route('user.login');
+        $otp = Otp::find($id);
+        if($otp){
+            if($otp && $otp->otp == $request->otp){
+                $customer->is_verified = 1;
+                $customer->verif_code = $request->otp;
+                $customer->email_verified_at = strtotime("now");
+                $request->session()->forget('otp');
+                $customer->save();
+                return redirect()->route('user.login');
+            }
+            return back()->with('errorOTP', 'Kode OTP Tidak sesuai');
         }else{
             return back()->with('errorOTP', 'Kode OTP Tidak sesuai');
         }

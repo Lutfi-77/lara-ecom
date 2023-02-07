@@ -59,3 +59,7 @@ Route::post('/otp/verif/{id}', 'UserController@verifOtp')->name('user.verifyOTP'
 Route::get('/', 'LandingController@Home')->name('home');
 Route::get('/product', 'ProductController@index')->name('products');
 Route::get('/product/detail/{id}', 'ProductController@detail')->name('detail');
+
+Route::middleware('auth')->group(function() {
+    Route::resource('/cart', 'ProductController@cart');
+});

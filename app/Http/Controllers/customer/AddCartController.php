@@ -1,8 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\customer;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+Use Alert;
+
+use App\Models\Cart;
 
 class AddCartController extends Controller
 {
@@ -13,7 +18,8 @@ class AddCartController extends Controller
      */
     public function index()
     {
-        //
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
+        return view('cart.index', compact('carts'));
     }
 
     /**
@@ -34,7 +40,13 @@ class AddCartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cart = new Cart;
+        $cart->user_id = Auth::user()->id;
+        $cart->product_id = $request->prodId;
+        $cart->qty = $request->qty;
+        $cart->save();
+        Alert::toast('Data berhasil ditambahkan ke keranjang', 'success');
+        return redirect()->back();
     }
 
     /**

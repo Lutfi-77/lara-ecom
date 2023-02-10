@@ -17,5 +17,9 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             return route('seller.login');
         }
+        // if(Auth::guard('customer')->check()){
+        //     return route('home.');
+        // }
+        // return route('seller.dashboard');
     }
 }

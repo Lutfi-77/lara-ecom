@@ -18,7 +18,7 @@ Route::post('/seller/login', 'seller\AuthSellerController@authenticate')->name('
 Route::get('/seller/register', 'seller\AuthSellerController@register')->name('seller.register');
 Route::post('/seller/register', 'seller\AuthSellerController@sendRegister')->name('seller.sendRegister');
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth:users')->group(function(){
     Route::get('/seller', 'seller\SellerController@dashboard')->name('seller.dashboard');
     Route::get('/seller/logout', 'seller\AuthSellerController@logout')->name('seller.logout');
 
@@ -60,6 +60,6 @@ Route::get('/', 'LandingController@Home')->name('home');
 Route::get('/product', 'ProductController@index')->name('products');
 Route::get('/product/detail/{id}', 'ProductController@detail')->name('detail');
 
-Route::middleware('auth')->group(function() {
-    Route::resource('/cart', 'ProductController@cart');
+Route::middleware('auth:customers')->group(function() {
+    Route::resource('/cart', 'customer\AddCartController');
 });

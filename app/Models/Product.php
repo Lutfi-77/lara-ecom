@@ -22,6 +22,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
+    public function cart(){
+        return $this->hasMany('App\Models\Cart', 'product_id');
+    }
+
     public function orderDetail(){
         return $this->hasMany('App\Models\OrderDetail', 'product_id');
     }

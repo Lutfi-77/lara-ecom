@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     {{-- Start Navbar --}}
     <nav class="navbar navbar-light bg-light d-none d-sm-block d-sm-none d-md-block">
         <div class="container__custom">
@@ -20,23 +21,40 @@
                     height="24">
                 <h3>Logo</h3>
             </a>
-
             <ul class="navbar-nav flex-row w-100">
                 <li class="nav-item w-100 margin__right">
                     <input type="text" class="form-control" placeholder="Cari Product...">
                 </li>
+                @auth('customers')
                 <li class="nav-item d-flex p-1">
-                    @if (Auth::guard('customer')->check())
-                        <a href="{{route('user.logout')}}" class="btn btn-danger">Logout</a>
-                    @else
-                    <a href="{{route('user.login')}}" class="auth__link d-flex align-items-center">
-                        <span class="material-icons">
-                            account_circle
-                        </span>
-                        Login
-                    </a>   
-                    @endif
+                    {{-- @if (Auth::guard('customers')->check()) --}}
+                    <div class="dropdown relative">
+                        <button class="btn btn-secondary d-flex items-center justify" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-icons me-2">
+                                account_circle
+                            </span>
+                            <span>{{Auth::guard('customers')->user()->customer_name}}</span>
+                        </button>
+                        <ul class="dropdown-menu position-absolute" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="{{route('cart.index')}}">Cart</a></li>
+                            <li><a class="dropdown-item" href="{{route('user.logout')}}">Logout</a></li>
+                            {{-- <li><a class="dropdown-item" href="#">Something else here</a></li> --}}
+                        </ul>
+                    </div>
+                    {{-- @else --}}
+
+                    {{-- @endif --}}
                 </li>
+                @endauth
+                @guest('customers')
+                <a href="{{route('user.login')}}" class="auth__link d-flex align-items-center">
+                    <span class="material-icons">
+                        account_circle
+                    </span>
+                    Login
+                </a>
+                @endguest
             </ul>
         </div>
     </nav>
@@ -62,7 +80,8 @@
                     </li>
                     <li class="nav-item d-md-none d-lg-block d-lg-none d-xl-block d-xl-none d-xxl-none">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
-                            <a class="btn btn-success d-flex w-100 justify-content-center" href="{{route('seller.login')}}">
+                            <a class="btn btn-success d-flex w-100 justify-content-center"
+                                href="{{route('seller.login')}}">
                                 <span class="material-icons">
                                     account_circle
                                 </span>

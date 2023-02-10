@@ -46,15 +46,37 @@
             </div>
         </div>
         <div class="col-7">
-            <h3>{{$product->product_name}}</h3>
-            <h4 class="text-right text-danger">{{$product->price}}</h4>
-            <h4>Deskripsi: </h4>
-            <p>
-                {{$product->product_desc}}
-            </p>
             <form action="{{route('cart.store')}}" method="post">
+                @csrf
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>{{$product->product_name}}</h3>
+                    <h4 class="text-danger">{{$product->price}}</h4>
+                </div>
+                <h4 class="mb-3">Deskripsi: </h4>
+                <p>
+                    {{$product->product_desc}}
+                </p>
+                <div class="d-flex flex-column mb-5">
+                    <h4 class="qty mb-3">
+                        Quantity
+                    </h4>
+                    <div class="input-group w-25">
+                        <span class="input-group-prepend">
+                            <button type="button" id="minus" class="btn btn-outline-secondary btn-number" data-type="minus">
+                                <span class="fa fa-minus">-</span>
+                            </button>
+                        </span>
+                        <input type="text" name="qty" id="qty" class="form-control input-number text-center" value="1" min="1">
+                        <span class="input-group-append">
+                            <button type="button" id="plus" class="btn btn-outline-secondary btn-number" data-type="plus">
+                                <span class="fa fa-plus">+</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <input type="hidden" name="prodId" value="{{$product->id}}">
                 <button class="btn btn-success">Beli</button>
-                <button class="btn btn-info">Tambah Keranjang</button>
+                <button class="btn btn-info" style="color: white">Tambah Keranjang</button>
             </form>
         </div>
     </div>
@@ -83,6 +105,30 @@
             swiper.slideTo(this.dataset.slider)
         })
     }
+</script>
+
+<script>
+    const minus = document.querySelector('#minus');
+    const plus = document.querySelector('#plus');
+    const qty = document.querySelector('#qty');
+    let currentValue = parseInt(qty.value);
+
+    qty.addEventListener('change', function(){
+        // if(qty.value > qty.getAttribute("min")){
+        //     qty.removeAttribute("disabled");
+        // }
+        console.log("berubah")
+    })
+
+    minus.addEventListener('click', function(){
+        currentValue -= 1;
+        qty.value = currentValue
+    });
+
+    plus.addEventListener('click', function(){
+        currentValue += 1;
+        qty.value = currentValue
+    });
 
 </script>
 @endsection

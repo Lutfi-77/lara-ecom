@@ -23,7 +23,7 @@ class UserController extends Controller
     public function authenticate(Request $request)
     {
         $credential = $request->only('email', 'password');
-        if( Auth::guard('customer')->attempt($credential) ){
+        if( Auth::guard('customers')->attempt($credential) ){
             return redirect()->route('home');
         }
 
@@ -109,7 +109,7 @@ class UserController extends Controller
 
     public function logout()
     {
-        Auth::guard('customer')->logout();
+        Auth::guard('customers')->logout();
         return redirect()->route('home');
     }
 

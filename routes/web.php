@@ -62,4 +62,5 @@ Route::get('/product/detail/{id}', 'ProductController@detail')->name('detail');
 
 Route::middleware('auth:customers')->group(function() {
     Route::resource('/cart', 'customer\AddCartController');
+    Route::resource('/checkout', 'customer\CheckoutController');
 });

@@ -50,7 +50,7 @@
                 @csrf
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h3>{{$product->product_name}}</h3>
-                    <h4 class="text-danger">{{$product->price}}</h4>
+                    <h4 class="text-danger">@rupiah($product->price)</h4>
                 </div>
                 <h4 class="mb-3">Deskripsi: </h4>
                 <p>
@@ -75,6 +75,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="prodId" value="{{$product->id}}">
+                <input type="hidden" name="price" value="{{$product->price}}">
                 <button class="btn btn-success">Beli</button>
                 <button class="btn btn-info" style="color: white">Tambah Keranjang</button>
             </form>

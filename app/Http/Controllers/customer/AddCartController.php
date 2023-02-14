@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 Use Alert;
 
 use App\Models\Cart;
+use App\Models\Product;
 
 class AddCartController extends Controller
 {
@@ -20,7 +21,8 @@ class AddCartController extends Controller
     {
         $carts = Cart::where('user_id', Auth::user()->id)->get();
         $total = Auth::user()->cart->sum('price');
-        return view('cart.index', compact('carts','total'));
+        $user = Auth::user();
+        return view('cart.index', compact('carts','total', 'user'));
     }
 
     /**
@@ -42,9 +44,11 @@ class AddCartController extends Controller
     public function store(Request $request)
     {
         $cart = new Cart;
+        $product = Product::find($request->prodId);
         $cart->user_id = Auth::user()->id;
         $cart->product_id = $request->prodId;
         $cart->qty = $request->qty;
+        $cart->price = $product->price;
         $cart->save();
         Alert::toast('Data berhasil ditambahkan ke keranjang', 'success');
         return redirect()->back();

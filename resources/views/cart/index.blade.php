@@ -14,7 +14,13 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="http://localhost:8000/assets/img/shoes.png" class="img-fluid rounded-start" alt="cartimg">
+                {{-- <img src="http://localhost:8000/assets/img/shoes.png" class="img-fluid rounded-start" alt="cartimg"> --}}
+                @if ($cart->product->image->isEmpty())
+                <img src="{{asset('assets/img/noimage.png')}}" width="100%" class="img-fluid rounded-start">
+                @endif
+                {{-- @foreach ($cart->product->image as $item) --}}
+                <img src="{{url('storage/'.$cart->product->image[0]->url)}}" width="100%" class="img-fluid rounded-start">
+                {{-- @endforeach --}}
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -44,8 +50,9 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <div class="btn btn-info text-light me-2" data-bs-toggle="modal" data-bs-target="#addressModal">
-                            Checkout</div>
+                        {{-- <div class="btn btn-info text-light me-2" data-bs-toggle="modal" data-bs-target="#addressModal">
+                            Checkout
+                        </div> --}}
                         <div class="btn btn-danger text-light">Delete</div>
                     </div>
                 </div>
@@ -53,8 +60,9 @@
         </div>
     </div>
     @endforeach
+
     <!-- Modal -->
-    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -62,14 +70,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <h6>Kirim Ke: </h6>
+                    {{$user->customer_address}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">Checkout Now</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 <div class="total position-absolute bottom-0 bg-dark text-light py-4 w-100">
@@ -79,7 +88,11 @@
             <h4>@rupiah($total)</h4>
             {{-- {{$carts->total}} --}}
         </div>
-        <div class="btn btn-success">Checkout All</div>
+        <form action="{{route('checkout.store')}}" method="post">
+            @csrf
+            <input type="hidden" name="total" value="{{$total}}">
+            <button class="btn btn-success">Checkout All</button>
+        </form>
     </div>
 </div>
 @endsection

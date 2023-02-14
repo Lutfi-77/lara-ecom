@@ -4,6 +4,11 @@ namespace App\Http\Controllers\customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class CheckoutController extends Controller
 {
@@ -35,7 +40,30 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $carts = Auth::user()->cart;
+        $user = Auth::user();
+        $order = new Order;
+        
+        $order->user_id = $carts[0]->user_id;
+        $order->customer_id = $user->id;
+        $order->save();
+        
+        foreach ($carts as $cart) {
+            $orderDetail = OrderDetail::create([
+                "order_id" => $order->id,
+                "product_id" => $cart->product_id,
+                "address" => $user->customer_address,
+                "qty" => $cart->qty,
+                "price" => $request->total,
+                "status" => "proccess"
+            ]);
+        }
+
+        if($order){
+            $removeCart = Cart::where('user_id', $user->id)->delete();
+            return redirect()->route('home');
+        }
+
     }
 
     /**

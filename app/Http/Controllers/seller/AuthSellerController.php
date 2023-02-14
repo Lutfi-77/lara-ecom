@@ -22,7 +22,7 @@ class AuthSellerController extends Controller
     {
         $credential = $request->only('email', 'password');
 
-        if(Auth::attempt($credential)){
+        if(Auth::guard('users')->attempt($credential)){
             $user = Auth::user();
             if ( $user->is_verified ){
                 return redirect()->route('seller.dashboard');

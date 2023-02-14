@@ -9,8 +9,13 @@
 
 @section('content')
 <div class="container">
+    @if ($carts->isEmpty())
+        <div class="position relative w-100">
+            <h3 class="text-center">Cart Kosong</h3>
+            <a href="{{route('home')}}" class="btn btn-info d-block text-light w-25 m-auto">Pergi Belanja</a>
+        </div>
+    @endif
     @foreach ($carts as $cart)
-    {{-- {{dd($cart->product)}} --}}
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
